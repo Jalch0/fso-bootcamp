@@ -5,14 +5,30 @@ import Content from "./Content.js"
 import Total from "./Total.js"
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const content = ["Fundamentals of React", "Using props to pass data", "State of a component"]
-  const exercises = [10, 7, 14]
+
+  const course = {
+    coursename: "Half Stack application development",
+    parts: [
+      {
+        name: "Fundamentals of React",
+        exercise: 10 
+      },
+      {
+        name: "Using props to pass data",
+        exercise: 7
+      },
+      {
+        name: "State of a component",
+        exercise: 14
+      }
+    ]
+  }
+  
   return (
     <div>
-      <Header course={course}/>
-      <Content content={content} exercises={exercises}/>
-      <Total exercises={exercises}/>
+      <Header course={course.coursename}/>
+      <Content content={course.parts}/>
+      <Total exercises={course.parts}/>
     </div>
   )
 }
