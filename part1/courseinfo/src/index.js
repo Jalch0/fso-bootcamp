@@ -8,7 +8,6 @@ const App = () => {
   const course = 'Half Stack application development'
   const content = ["Fundamentals of React", "Using props to pass data", "State of a component"]
   const exercises = [10, 7, 14]
-  
   return (
     <div>
       <Header course={course}/>
