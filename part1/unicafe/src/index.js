@@ -3,47 +3,55 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { useState } from 'react'
 
+
+const WarningNoFeedback = () => <p>No feedback given</p>
+
 const Statistics = (props) => {
-
-  const all = (props.ComGood + props.ComNeutral + props.ComBad);
-  const average = ((props.ComGood - props.ComBad) / all).toFixed(2);
-  const positive = ((props.ComGood / all) * 100).toFixed(2);
-
+  
   return (
     <div>
-      <p>All{all}</p>
-      {isNaN(average, positive) ? (
-        <div>
-          <p>Average 0</p>
-          <p>Positive 0</p>
-        </div>
-      ) :
-      <div>
-        <p>Average {average}</p>
-        <p>Positive {positive}%</p>
-      </div>
-
-      }
-
+      <p>good</p>
+      <p>neutral</p>
+      <p>bad</p>
+      <p>All {props.sum}</p>
+      <p>Average</p>
+      <p>Positive</p>
     </div>
-  )
-
+    )
 }
 
 const App = () => {
 
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [count, setCount] = useState({
+    good: 0,
+    neutral:0,
+    bad: 0
+  })
+  const [sum, setSum] = useState(0)
 
   const handleClickgood = () => {
-    setGood(prevGood => prevGood + 1)
+      const NewCountState = {
+        ...count,
+        good: count.good + 1
+      }
+    setCount(NewCountState)
+    setSum(prevSum => prevSum + 1);
   }
   const handleClickneutral = () => {
-    setNeutral(prevGood => prevGood + 1)
+      const NewCountState = {
+        ...count,
+        neutral: count.neutral + 1
+      }
+    setCount(NewCountState)
+    setSum(prevSum => prevSum + 1);
   }
   const handleClickbad = () => {
-    setBad(prevGood => prevGood + 1)
+      const NewCountState = {
+        ...count,
+        bad: count.bad + 1
+      }
+  setCount(NewCountState)
+  setSum(prevSum => prevSum + 1);
   }
 
 
@@ -54,10 +62,9 @@ const App = () => {
       <button onClick={handleClickneutral}>neutral</button>
       <button onClick={handleClickbad}>bad</button>
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <Statistics ComGood={good} ComNeutral={neutral} ComBad={bad} /> 
+      {sum === 0 ? (
+      <WarningNoFeedback />) : 
+      <Statistics count={count} sum={sum} />}
     </div>
   )
 }
