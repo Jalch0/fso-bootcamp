@@ -6,27 +6,9 @@ import { useState } from 'react'
 
 const WarningNoFeedback = () => <p>No feedback given</p>
 
-const Statistics = (props) => {
+const ShowButton = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
-  const {sum} = props 
-  const Goodvalue = props.count.good;
-  const Neutralvalue = props.count.neutral;
-  const Badvalue = props.count.bad;
-
-  const Average = (Goodvalue - Badvalue) / sum;
-  const Averagepositive = (Goodvalue / sum) * 100; 
-
-  return (
-    <div>
-      <p>good {Goodvalue}</p>
-      <p>neutral {Neutralvalue}</p>
-      <p>bad {Badvalue}</p>
-      <p>All {sum}</p>
-      <p>Average {Average}</p>
-      <p>Positive {Averagepositive}%</p>
-    </div>
-    )
-}
+const Statistics = ({text, value}) => <p>{text} {value}</p>
 
 const App = () => {
 
@@ -62,17 +44,26 @@ const App = () => {
   setSum(prevSum => prevSum + 1);
   }
 
+  const Average = (count.good - count.bad) / sum;
+  const Averagepositive = (count.good / sum) * 100; 
 
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={handleClickgood}>good</button>
-      <button onClick={handleClickneutral}>neutral</button>
-      <button onClick={handleClickbad}>bad</button>
+      <ShowButton handleClick={handleClickgood} text="good"/>
+      <ShowButton handleClick={handleClickneutral} text="neutral"/>
+      <ShowButton handleClick={handleClickbad} text="bad"/>
       <h1>statistics</h1>
       {sum === 0 ? (
-      <WarningNoFeedback />) : 
-      <Statistics count={count} sum={sum} />}
+      <WarningNoFeedback />) :
+      <div>
+      <Statistics text="good" value={count.good} />
+      <Statistics text="neutral" value={count.neutral}/>
+      <Statistics text="bad" value={count.bad}/>
+      <Statistics text="all"  value={sum}/>
+      <Statistics text="average" value={Average} />
+      <Statistics text="positive" value={Averagepositive} />
+      </div>}
     </div>
   )
 }
