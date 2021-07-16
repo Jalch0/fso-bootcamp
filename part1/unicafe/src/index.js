@@ -7,15 +7,23 @@ import { useState } from 'react'
 const WarningNoFeedback = () => <p>No feedback given</p>
 
 const Statistics = (props) => {
-  
+
+  const {sum} = props 
+  const Goodvalue = props.count.good;
+  const Neutralvalue = props.count.neutral;
+  const Badvalue = props.count.bad;
+
+  const Average = (Goodvalue - Badvalue) / sum;
+  const Averagepositive = (Goodvalue / sum) * 100; 
+
   return (
     <div>
-      <p>good</p>
-      <p>neutral</p>
-      <p>bad</p>
-      <p>All {props.sum}</p>
-      <p>Average</p>
-      <p>Positive</p>
+      <p>good {Goodvalue}</p>
+      <p>neutral {Neutralvalue}</p>
+      <p>bad {Badvalue}</p>
+      <p>All {sum}</p>
+      <p>Average {Average}</p>
+      <p>Positive {Averagepositive}%</p>
     </div>
     )
 }
