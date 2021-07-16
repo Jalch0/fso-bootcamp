@@ -8,7 +8,14 @@ const WarningNoFeedback = () => <p>No feedback given</p>
 
 const ShowButton = ({text, handleClick}) => <button onClick={handleClick}>{text}</button>
 
-const Statistics = ({text, value}) => <p>{text} {value}</p>
+const Statistics = ({text, value}) => {
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
+}
 
 const App = () => {
 
@@ -45,7 +52,7 @@ const App = () => {
   }
 
   const Average = (count.good - count.bad) / sum;
-  const Averagepositive = (count.good / sum) * 100; 
+  const Averagepositive = (count.good / sum) * 100 + " %";
 
   return (
     <div>
@@ -56,14 +63,16 @@ const App = () => {
       <h1>statistics</h1>
       {sum === 0 ? (
       <WarningNoFeedback />) :
-      <div>
-      <Statistics text="good" value={count.good} />
-      <Statistics text="neutral" value={count.neutral}/>
-      <Statistics text="bad" value={count.bad}/>
-      <Statistics text="all"  value={sum}/>
-      <Statistics text="average" value={Average} />
-      <Statistics text="positive" value={Averagepositive} />
-      </div>}
+      <table>
+        <tbody>
+          <Statistics text="good" value={count.good} />
+          <Statistics text="neutral" value={count.neutral}/>
+          <Statistics text="bad" value={count.bad}/>
+          <Statistics text="all"  value={sum}/>
+          <Statistics text="average" value={Average} />
+          <Statistics text="positive" value={Averagepositive} />
+        </tbody>
+      </table>}
     </div>
   )
 }
