@@ -11,17 +11,20 @@ const anecdotes = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const App = ({anecdotes}) => {
 
-const App = (props) => {
+
+
   const [selected, setSelected] = useState(0)
 
   const RandomAnecdote = () => {
-    Math.floor(Math.random() * 5 + 1)
+    let NumberOfAnecdote = Math.floor(Math.random() * 6)
+    setSelected(NumberOfAnecdote);
   }
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
       <button onClick={RandomAnecdote}>next anecdote</button>
     </div>
   )
