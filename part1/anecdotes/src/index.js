@@ -11,32 +11,44 @@ const anecdotes = [
   'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const ShowAnecdote = ({anecdote, votes}) => {
+  return(
+    <div>
+      <p>{anecdote}</p>
+      <p>Has {votes} votes</p>
+    </div>
+  )
+}
+
 const App = ({anecdotes}) => {
-
-
 
   const [selected, setSelected] = useState(0)
   const [votation, setVotation] = useState(new Array(anecdotes.length).fill(0))
+  const [Maxvoted, setMaxvoted] = useState(0)
 
   const vote = () => {
     const newVotation = [
       ...votation
     ]
   newVotation[selected] += 1;
-  setVotation(newVotation)
+  setVotation(newVotation);
+    const newArray = votation.indexOf(Math.max(...votation))
+  setMaxvoted(newArray);
   }
 
   const RandomAnecdote = () => {
-    let AnecdoteNumber = Math.floor(Math.random() * 6)
+    let AnecdoteNumber = Math.floor(Math.random() * anecdotes.length)
     setSelected(AnecdoteNumber);
   }
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <p>Has {votation[selected]} votes</p>
+      <h1>Anecdote of the day</h1>
+      <ShowAnecdote anecdote={anecdotes[selected]} votes={votation[selected]}/>
       <button onClick={vote}>vote</button>
       <button onClick={RandomAnecdote}>next anecdote</button>
+      <h2>Anecdote with most votes</h2>
+      <ShowAnecdote anecdote={anecdotes[Maxvoted]} votes={votation[Maxvoted]}/>
     </div>
   )
 }
