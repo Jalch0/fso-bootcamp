@@ -1,4 +1,5 @@
 const Content = ({content}) => {
+
     return (
         <div>
             {content.map((content) => (
