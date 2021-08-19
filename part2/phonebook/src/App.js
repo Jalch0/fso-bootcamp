@@ -12,12 +12,21 @@ const handleAddName = (event) => {
 
 const handleSubmit = (event) => {
     event.preventDefault()
-    const AddName = {
-      name: newName
+
+    const findNameEqual = persons.some(person => person.name === newName);
+
+    console.log(persons.some(persons => persons.name === newName))
+
+    if(findNameEqual) {
+      alert(newName.concat(" already exists"))
+    } else {
+      const addName = [{
+        name: newName
+      }]
+      setPersons(persons.concat(addName))
+      setNewName("")
     }
-    setPersons(persons.concat(AddName))
-    setNewName("");
-}
+  }
 
   return (
     <div>
