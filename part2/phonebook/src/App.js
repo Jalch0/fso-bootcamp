@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getAllPersons } from './services/getAllPersons'
+import { createPerson } from './services/createPerson'
 
 const App = () => {
 
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number:'040-1234567' },
-    { name: "Ada Lovelace", number: "39-44-5323523"},
-    { name: "Dan Abramov", number: "12-43-234345"},
-    { name: "Mary Poppendieck", number: "39-23-6423122"}])
-
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber] = useState('')
   const [ newFilter, setNewFilter] = useState('')
+
+  useEffect(() => {
+    getAllPersons().then(data => setPersons(prevPersons => prevPersons.concat(data)))
+  }, [])
 
 
 const searchfilter = (event) => {
@@ -33,11 +34,16 @@ const handleSubmit = (event) => {
     if(findNameEqual) {
       alert(`${newName} is already added to phonebook `)
     } else {
-      const addPerson = [{
+      const addPerson = {
         name: newName,
-        number: newNumber
-      }]
-      setPersons(persons.concat(addPerson))
+        number: newNumber,
+        id: persons.length + 1 
+      }
+
+      createPerson(addPerson)
+      .then(data => {
+        setPersons(prevPersons => prevPersons.concat(data))
+      })
       setNewName("")
       setNewNumber("")
     }
