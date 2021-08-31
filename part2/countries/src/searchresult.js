@@ -2,6 +2,8 @@ import { Countrybutton } from "./countrybutton"
 
 export const Searchresult = ({filtro, setShow, show}) => {
     return filtro.map(countries => {
-        return <ul key={countries.name}><li>{countries.name}</li> <Countrybutton country={countries} show={show} setShow={setShow}/></ul>
+        return <li key={countries.name}>
+                    {countries.name} <Countrybutton country={countries} show={show} setShow={setShow}/>
+                </li>
     })
 }

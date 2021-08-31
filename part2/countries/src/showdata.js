@@ -8,6 +8,6 @@ export const Showdata = ({country}) => {
         <ul>
             {country.languages.map(lang => <li key={lang.name}>{lang.name}</li>)}
         </ul>
-        <img width="250" height="150" src={country.flag} alt={`La bandera es de ${country.name}`} />
+        <img width="250px" height="150px" src={country.flag} alt={`flag of ${country.name}`} />
     </div>
     )}

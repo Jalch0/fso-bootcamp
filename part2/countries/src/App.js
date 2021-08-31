@@ -29,7 +29,7 @@ function App() {
       </label>
       {search === "" ? <p>Write something to start finding countries.</p> :
       filtro.length > 10 ? <p>Too many results, write another filter</p> :
-      <Searchresult filtro={filtro}/>}
+      <ul><Searchresult filtro={filtro}/></ul>}
     </div>
   );
 }
