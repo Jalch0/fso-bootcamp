@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getAllPersons } from './services/getAllPersons'
-import { createPerson } from './services/createPerson'
+import { getAll, create, deletePerson, replace } from './services/requests'
 
 const App = () => {
 
@@ -10,9 +9,8 @@ const App = () => {
   const [ newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
-    getAllPersons().then(data => setPersons(prevPersons => prevPersons.concat(data)))
+    getAll().then(data => setPersons(prevPersons => prevPersons.concat(data)))
   }, [])
-
 
 const searchfilter = (event) => {
   setNewFilter(event.target.value)
@@ -32,7 +30,18 @@ const handleSubmit = (event) => {
     const findNameEqual = persons.some(person => person.name === newName);
 
     if(findNameEqual) {
-      alert(`${newName} is already added to phonebook `)
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const sameperson = persons.find(p => p.name === newName)
+        const url = `http://localhost:3001/persons/${sameperson.id}`
+        const changes = {...sameperson, number: newNumber}
+        replace(url, changes).then(data => {
+          setPersons(persons.map(p => p.id !== sameperson.id ? p : data));
+          setNewName("");
+          setNewNumber("");
+        })
+      } else {
+        alert(`You can't add the same person`)
+      }
     } else {
       const addPerson = {
         name: newName,
@@ -40,13 +49,25 @@ const handleSubmit = (event) => {
         id: persons.length + 1 
       }
 
-      createPerson(addPerson)
+      create(addPerson)
       .then(data => {
         setPersons(prevPersons => prevPersons.concat(data))
       })
       setNewName("")
       setNewNumber("")
     }
+  }
+
+  const handleDelete = (person) => {
+    const url = `http://localhost:3001/persons/${person.id}`
+
+    if(window.confirm("Are you sure to delete this person?")) {
+      deletePerson(url).then(response => {
+        console.log(response)
+        setPersons(persons.filter(p => p.id !== person.id))
+      })
+    }
+
   }
 
   return (
@@ -66,7 +87,7 @@ const handleSubmit = (event) => {
       .filter((person) => {
         return person.name.toLowerCase().indexOf(newFilter.toLowerCase()) !== -1
       })
-      .map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+      .map(person => <p key={person.name}>{person.name} {person.number} <button onClick={() => handleDelete(person)}>delete</button></p>)}
     </div>
   )
 }
