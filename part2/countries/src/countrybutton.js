@@ -11,7 +11,7 @@ const handleshow = () => {
 
     return <div>
         <button onClick={handleshow}>Show</button>
-    {show ? <Showdata country={country} /> : ""}
+    {show ? <Showdata country={country}/> : ""}
     </div>
 
 }

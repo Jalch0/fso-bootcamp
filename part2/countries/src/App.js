@@ -17,7 +17,7 @@ function App() {
     setSearch(ev.target.value)
   }
 
-  const filtro = countries.filter((countries) => {
+  const filter = countries.filter((countries) => {
     return (countries.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
   })
   
@@ -25,11 +25,11 @@ function App() {
     <div>
       <label>
         find countries
-        <input type="text" id="find" onChange={searchCountries}/>
+        <input type="text" onChange={searchCountries}/>
       </label>
       {search === "" ? <p>Write something to start finding countries.</p> :
-      filtro.length > 10 ? <p>Too many results, write another filter</p> :
-      <ul><Searchresult filtro={filtro}/></ul>}
+      filter.length > 10 ? <p>Too many results, write another filter</p> :
+      <ul><Searchresult newcountries={filter}/></ul>}
     </div>
   );
 }
